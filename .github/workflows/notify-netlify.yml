@@ -1,0 +1,14 @@
+name: notify-netlify
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  trigger-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Netlify build
+        env:
+          NETLIFY_BUILD_HOOK_URL: ${{ secrets.NETLIFY_BUILD_HOOK_URL }}
+        run: curl -fsS -X POST "$NETLIFY_BUILD_HOOK_URL"
